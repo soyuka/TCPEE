@@ -14,14 +14,15 @@ As this is a low level library, you have to handle the server/socket connections
 
 ## Usage
 
-Master:
+### Master
 
 ```javascript
 const Server = require('net').Server
 const TCPEE = require('tcpee')
 
 //Init the tcpee with null, the socket isn't connected yet
-const tcpee = new TCPEE(null, {wildcard: true})
+const tcpee = new TCPEE(null)
+
 //it's possible to send data, which will be stored until the client is available
 tcpee.send('take this', 'when you are online')
 
@@ -33,20 +34,24 @@ const server = new Server()
 server.listen('tcpee.sock')
 
 server.on('connection', function(sock) {
+  //Because we've init the TCPEE module before, we need to set up things manually
   tcpee.client = sock
   //Hook events here, socket is writable
   tcpee._hookEvents()
+
+  //Or just create the TCPEE here:
+  let client = new TCPEE(sock)
 })
 ```
 
-Client:
+### Client
 
 ```javascript
 const Socket = require('net').Socket
 const socket = new Socket({allowHalfOpen: true})
 const TCPEE = require('tcpee')
 
-let client = new TCPEE(socket, {wildcard: true})
+let client = new TCPEE(socket)
 
 socket.connect('tcpee.sock')
 
@@ -72,6 +77,32 @@ process.on('exit', function(code) {
   process.nextTick(e => process.exit(code))
 })
 ```
+
+## API
+
+```
+/**
+ * Constructor
+ * @param socket - the socket to write/read to/from
+ * @param options - eventemitter2 options
+ */
+new TCPEE(socket = null, {wildcard: true})
+
+/**
+ * @param key - the key you'll listen on
+ * @param ...args
+ */
+tcpee.send('key', arg1, arg2)
+
+/**
+ * @param key
+ * @param ...args data received
+ */
+tcpee.on('key', function(arg1, arg2) {
+})
+```
+
+Apart from the `send` method, the api inherits the one of [EventEmitter2](https://github.com/asyncly/EventEmitter2).
 
 ### Licence
 
