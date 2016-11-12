@@ -36,7 +36,7 @@ TCPEE.prototype.send = function() {
     writeArgs = [JSON.stringify(args) + EOL]
   }
 
-  if (this.cliet && this.client.writable) {
+  if (this.client && this.client.writable) {
     this.client.write.apply(this.client, writeArgs)
   } else {
     this.pending.push(writeArgs)

@@ -9,7 +9,7 @@ const fs = require('fs')
 
 let client, server, childProcess
 
-describe('IPCEE', function() {
+describe('TCPEE', function() {
 
   before(function() {
     if (existsSync(SOCKET)) {
