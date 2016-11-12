@@ -1,10 +1,10 @@
 # TCP EE [![Build Status](https://travis-ci.org/soyuka/TCPEE.svg?branch=master)](https://travis-ci.org/soyuka/TCPEE)
 
-TCP [IPCEE](https://github.com/soyuka/IPCEE)
+TCP version of [IPCEE](https://github.com/soyuka/IPCEE)
 
 ## What for?
 
-This is a TCP wrapper that has the same api as IPCEE. It's a low level API to interact with a socket by using `send()` and an event listener.
+This is a TCP wrapper that has the same api as [IPCEE](https://github.com/soyuka/IPCEE). It's a low level API to interact with a socket by using `send()` and an event listener.
 
 > Wait, why isn't IPC sufficient?
 
@@ -16,7 +16,7 @@ As this is a low level library, you have to handle the server/socket connections
 
 Master:
 
-```
+```javascript
 const Server = require('net').Server
 const TCPEE = require('tcpee')
 
@@ -41,7 +41,7 @@ server.on('connection', function(sock) {
 
 Client:
 
-```
+```javascript
 const Socket = require('net').Socket
 const socket = new Socket({allowHalfOpen: true})
 const TCPEE = require('tcpee')

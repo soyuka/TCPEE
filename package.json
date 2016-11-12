@@ -1,6 +1,6 @@
 {
   "name": "tcpee",
-  "version": "1.0.6",
+  "version": "1.0.0",
   "description": "TCP version of IPCEE",
   "engines": {
     "node": ">=6"
