@@ -56,6 +56,7 @@ TCPEE.prototype.ondata = function(d) {
 
     this.emit.apply(this, args)
   })
+
   return this
 }
 
