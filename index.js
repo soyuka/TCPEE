@@ -60,18 +60,26 @@ TCPEE.prototype.ondata = function(d) {
   return this
 }
 
+TCPEE.prototype.onerror = function(e) {
+  if (e.code === 'ENOENT') { return }
+  this.emit('error', e.message, e.stack)
+}
+
 /**
  * Replicate the exit event and clean IPCEE events
  * @param integer code
  * @return void
  */
 TCPEE.prototype.onclose = function() {
-  this.emit('exit', this.exitCode)
+  if (this.exitCode !== undefined) {
+    this.emit('exit', this.exitCode)
+  }
 }
 
 TCPEE.prototype._hookEvents = function() {
   this.client.addListener('data', this.ondata.bind(this))
   this.client.addListener('close', this.onclose.bind(this))
+  this.client.addListener('error', this.onerror.bind(this))
 
   //send pending data
   if (this.pending.length) {
